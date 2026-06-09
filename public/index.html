@@ -18,21 +18,17 @@
       </div>
       <div class="header-title">
         <span class="title-main">Sistema de Monitoramento</span>
-        <span class="title-sub">Monitoramento de Dispositivos</span>
+        <span class="title-sub">Monitoramento de Notebooks</span>
       </div>
     </div>
     <div class="header-right">
-      <div class="status-online">
-        <span class="dot-online"></span>
-        <span>Online</span>
+      <div class="last-update">
+        <i class="fa-solid fa-rotate"></i>
+        <span id="last-update-text">Atualizando...</span>
       </div>
-      <button class="btn-icon">
-        <i class="fa-regular fa-bell"></i>
+      <button class="btn-refresh" id="btn-refresh" title="Atualizar">
+        <i class="fa-solid fa-arrows-rotate"></i>
       </button>
-      <div class="user-badge">
-        <i class="fa-solid fa-circle-user"></i>
-        <span>Admin</span>
-      </div>
     </div>
   </header>
 
@@ -44,236 +40,172 @@
       <div class="summary-card">
         <span class="summary-label">TOTAL</span>
         <div class="summary-value">
-          <i class="fa-solid fa-grip"></i>
-          <span>8</span>
+          <i class="fa-solid fa-laptop"></i>
+          <span id="count-total">—</span>
         </div>
       </div>
       <div class="summary-card">
-        <span class="summary-label">ONLINE</span>
+        <span class="summary-label">GUARDADOS</span>
         <div class="summary-value">
           <i class="fa-solid fa-circle-check green"></i>
-          <span>4</span>
+          <span id="count-guardado">—</span>
         </div>
       </div>
       <div class="summary-card">
-        <span class="summary-label">EM ALERTA</span>
+        <span class="summary-label">RETIRADOS</span>
         <div class="summary-value">
           <i class="fa-solid fa-triangle-exclamation yellow"></i>
-          <span>2</span>
+          <span id="count-retirado">—</span>
         </div>
       </div>
       <div class="summary-card">
         <span class="summary-label">OFFLINE</span>
         <div class="summary-value">
           <i class="fa-solid fa-circle-xmark red"></i>
-          <span>2</span>
+          <span id="count-offline">—</span>
         </div>
       </div>
     </section>
 
-    <!-- SEARCH + FILTERS -->
+    <!-- FILTERS -->
     <section class="toolbar">
       <div class="search-wrap">
         <i class="fa-solid fa-magnifying-glass search-icon"></i>
-        <input class="search-input" type="text" placeholder="Buscar dispositivo..." />
+        <input class="search-input" id="search-input" type="text" placeholder="Buscar por nome ou patrimônio..." />
       </div>
       <div class="filter-group">
-        <button class="filter-btn active">Todos</button>
-        <button class="filter-btn">Online</button>
-        <button class="filter-btn">Em Alerta</button>
-        <button class="filter-btn">Offline</button>
+        <button class="filter-btn active" data-filter="todos">Todos</button>
+        <button class="filter-btn" data-filter="guardado">Guardado</button>
+        <button class="filter-btn" data-filter="retirado">Retirado</button>
+        <button class="filter-btn" data-filter="offline">Offline</button>
       </div>
     </section>
+
+    <!-- LOADING STATE -->
+    <div id="loading-state" class="loading-state">
+      <div class="spinner"></div>
+      <span>Carregando dispositivos...</span>
+    </div>
+
+    <!-- ERROR STATE -->
+    <div id="error-state" class="error-state hidden">
+      <i class="fa-solid fa-triangle-exclamation"></i>
+      <span id="error-message">Erro ao carregar dispositivos.</span>
+      <button class="btn-retry" id="btn-retry">Tentar novamente</button>
+    </div>
+
+    <!-- EMPTY STATE -->
+    <div id="empty-state" class="empty-state hidden">
+      <i class="fa-solid fa-laptop"></i>
+      <span>Nenhum notebook encontrado.</span>
+    </div>
 
     <!-- DEVICE CARDS -->
-    <section class="cards-grid">
+    <section class="cards-grid" id="cards-grid"></section>
 
-      <!-- Card 1 - Online -->
-      <div class="device-card">
-        <div class="card-top">
-          <div class="card-icon-wrap">
-            <i class="fa-solid fa-server"></i>
-          </div>
-          <div class="card-info">
-            <span class="card-label">DISPOSITIVO</span>
-            <span class="card-name">Servidor Principal</span>
-          </div>
-          <div class="card-metric">
-            <span class="metric-label">CPU</span>
-            <span class="metric-value">34%</span>
-          </div>
-        </div>
-        <div class="card-status status-online-badge">
-          <i class="fa-solid fa-circle"></i> Online
-        </div>
-        <button class="btn-action">
-          <i class="fa-solid fa-chart-line"></i> Ver Detalhes
-        </button>
-      </div>
-
-      <!-- Card 2 - Online -->
-      <div class="device-card">
-        <div class="card-top">
-          <div class="card-icon-wrap">
-            <i class="fa-solid fa-network-wired"></i>
-          </div>
-          <div class="card-info">
-            <span class="card-label">DISPOSITIVO</span>
-            <span class="card-name">Switch de Rede</span>
-          </div>
-          <div class="card-metric">
-            <span class="metric-label">TRÁFEGO</span>
-            <span class="metric-value">1.2 GB</span>
-          </div>
-        </div>
-        <div class="card-status status-online-badge">
-          <i class="fa-solid fa-circle"></i> Online
-        </div>
-        <button class="btn-action">
-          <i class="fa-solid fa-chart-line"></i> Ver Detalhes
-        </button>
-      </div>
-
-      <!-- Card 3 - Em Alerta -->
-      <div class="device-card">
-        <div class="card-top">
-          <div class="card-icon-wrap">
-            <i class="fa-solid fa-database"></i>
-          </div>
-          <div class="card-info">
-            <span class="card-label">DISPOSITIVO</span>
-            <span class="card-name">Banco de Dados</span>
-          </div>
-          <div class="card-metric">
-            <span class="metric-label">MEM</span>
-            <span class="metric-value">87%</span>
-          </div>
-        </div>
-        <div class="card-status status-alert-badge">
-          <i class="fa-solid fa-triangle-exclamation"></i> Em Alerta
-        </div>
-        <button class="btn-action">
-          <i class="fa-solid fa-chart-line"></i> Ver Detalhes
-        </button>
-      </div>
-
-      <!-- Card 4 - Offline -->
-      <div class="device-card">
-        <div class="card-top">
-          <div class="card-icon-wrap">
-            <i class="fa-solid fa-wifi"></i>
-          </div>
-          <div class="card-info">
-            <span class="card-label">DISPOSITIVO</span>
-            <span class="card-name">Roteador TP-Link</span>
-          </div>
-          <div class="card-metric">
-            <span class="metric-label">PING</span>
-            <span class="metric-value">—</span>
-          </div>
-        </div>
-        <div class="card-status status-offline-badge">
-          <i class="fa-solid fa-circle-xmark"></i> Offline
-        </div>
-        <button class="btn-action" disabled>
-          <i class="fa-solid fa-chart-line"></i> Ver Detalhes
-        </button>
-      </div>
-
-      <!-- Card 5 - Online -->
-      <div class="device-card">
-        <div class="card-top">
-          <div class="card-icon-wrap">
-            <i class="fa-solid fa-camera"></i>
-          </div>
-          <div class="card-info">
-            <span class="card-label">DISPOSITIVO</span>
-            <span class="card-name">Câmera IP 01</span>
-          </div>
-          <div class="card-metric">
-            <span class="metric-label">FPS</span>
-            <span class="metric-value">30</span>
-          </div>
-        </div>
-        <div class="card-status status-online-badge">
-          <i class="fa-solid fa-circle"></i> Online
-        </div>
-        <button class="btn-action">
-          <i class="fa-solid fa-chart-line"></i> Ver Detalhes
-        </button>
-      </div>
-
-      <!-- Card 6 - Em Alerta -->
-      <div class="device-card">
-        <div class="card-top">
-          <div class="card-icon-wrap">
-            <i class="fa-solid fa-hdd"></i>
-          </div>
-          <div class="card-info">
-            <span class="card-label">DISPOSITIVO</span>
-            <span class="card-name">HD Externo NAS</span>
-          </div>
-          <div class="card-metric">
-            <span class="metric-label">USO</span>
-            <span class="metric-value">91%</span>
-          </div>
-        </div>
-        <div class="card-status status-alert-badge">
-          <i class="fa-solid fa-triangle-exclamation"></i> Em Alerta
-        </div>
-        <button class="btn-action">
-          <i class="fa-solid fa-chart-line"></i> Ver Detalhes
-        </button>
-      </div>
-
-      <!-- Card 7 - Online -->
-      <div class="device-card">
-        <div class="card-top">
-          <div class="card-icon-wrap">
-            <i class="fa-solid fa-laptop"></i>
-          </div>
-          <div class="card-info">
-            <span class="card-label">DISPOSITIVO</span>
-            <span class="card-name">Estação de Trabalho</span>
-          </div>
-          <div class="card-metric">
-            <span class="metric-label">CPU</span>
-            <span class="metric-value">12%</span>
-          </div>
-        </div>
-        <div class="card-status status-online-badge">
-          <i class="fa-solid fa-circle"></i> Online
-        </div>
-        <button class="btn-action">
-          <i class="fa-solid fa-chart-line"></i> Ver Detalhes
-        </button>
-      </div>
-
-      <!-- Card 8 - Offline -->
-      <div class="device-card">
-        <div class="card-top">
-          <div class="card-icon-wrap">
-            <i class="fa-solid fa-print"></i>
-          </div>
-          <div class="card-info">
-            <span class="card-label">DISPOSITIVO</span>
-            <span class="card-name">Impressora HP</span>
-          </div>
-          <div class="card-metric">
-            <span class="metric-label">STATUS</span>
-            <span class="metric-value">—</span>
-          </div>
-        </div>
-        <div class="card-status status-offline-badge">
-          <i class="fa-solid fa-circle-xmark"></i> Offline
-        </div>
-        <button class="btn-action" disabled>
-          <i class="fa-solid fa-chart-line"></i> Ver Detalhes
-        </button>
-      </div>
-
-    </section>
   </main>
 
+  <!-- MODAL DE DETALHES -->
+  <div class="modal-overlay hidden" id="modal-overlay">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <i class="fa-solid fa-laptop modal-icon"></i>
+          <div>
+            <h2 class="modal-title" id="modal-nome">—</h2>
+            <span class="modal-patrimonio" id="modal-patrimonio">—</span>
+          </div>
+        </div>
+        <button class="modal-close" id="modal-close">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div class="modal-status-row">
+          <span class="modal-status-badge" id="modal-status-badge">—</span>
+          <span class="modal-carrinho" id="modal-carrinho-label">—</span>
+        </div>
+
+        <div class="modal-specs-grid">
+          <div class="spec-item">
+            <i class="fa-solid fa-microchip"></i>
+            <div>
+              <span class="spec-label">Processador</span>
+              <span class="spec-value" id="modal-processador">—</span>
+            </div>
+          </div>
+          <div class="spec-item">
+            <i class="fa-solid fa-memory"></i>
+            <div>
+              <span class="spec-label">RAM Total</span>
+              <span class="spec-value" id="modal-ram">—</span>
+            </div>
+          </div>
+          <div class="spec-item">
+            <i class="fa-solid fa-hard-drive"></i>
+            <div>
+              <span class="spec-label">Armazenamento</span>
+              <span class="spec-value" id="modal-armazenamento">—</span>
+            </div>
+          </div>
+          <div class="spec-item">
+            <i class="fa-solid fa-display"></i>
+            <div>
+              <span class="spec-label">Sistema</span>
+              <span class="spec-value" id="modal-sistema">—</span>
+            </div>
+          </div>
+          <div class="spec-item">
+            <i class="fa-solid fa-hashtag"></i>
+            <div>
+              <span class="spec-label">Nº do Slot</span>
+              <span class="spec-value" id="modal-slot">—</span>
+            </div>
+          </div>
+          <div class="spec-item">
+            <i class="fa-solid fa-calendar"></i>
+            <div>
+              <span class="spec-label">Cadastrado em</span>
+              <span class="spec-value" id="modal-criado">—</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-carrinho-section" id="modal-carrinho-section">
+          <h3 class="modal-section-title"><i class="fa-solid fa-box"></i> Carrinho</h3>
+          <div class="modal-specs-grid">
+            <div class="spec-item">
+              <i class="fa-solid fa-tag"></i>
+              <div>
+                <span class="spec-label">Nome</span>
+                <span class="spec-value" id="modal-carrinho-nome">—</span>
+              </div>
+            </div>
+            <div class="spec-item">
+              <i class="fa-solid fa-location-dot"></i>
+              <div>
+                <span class="spec-label">Localização</span>
+                <span class="spec-value" id="modal-carrinho-local">—</span>
+              </div>
+            </div>
+            <div class="spec-item">
+              <i class="fa-solid fa-circle"></i>
+              <div>
+                <span class="spec-label">Ativo</span>
+                <span class="spec-value" id="modal-carrinho-ativo">—</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-modal-close" id="btn-modal-close">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>

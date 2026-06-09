@@ -1,3 +1,5 @@
+const mongoose = require("mongoose");
+
 const NotebookSchema = new mongoose.Schema({
 
     nome: String,
@@ -31,3 +33,4 @@ const NotebookSchema = new mongoose.Schema({
     }
 
 })
+module.exports = mongoose.model("Notebook", NotebookSchema);

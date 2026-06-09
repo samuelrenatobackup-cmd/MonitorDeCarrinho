@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const CarrinhoSchema = new mongoose.Schema({
 
     nome: String,
@@ -15,3 +16,4 @@ const CarrinhoSchema = new mongoose.Schema({
     }
 
 })
+module.exports = mongoose.model("Carrinho", CarrinhoSchema);
