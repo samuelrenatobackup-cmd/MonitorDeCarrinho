@@ -1,5 +1,5 @@
-const Carrinho = require("../Models/Carrinho");
-const Notebook = require("../Models/Notebook");
+const Carrinho = require("../models/carrinho");
+const Notebook = require("../models/notebook");
 
 async function listarCarrinhos() {
     return await Carrinho.find().sort({ criadoEm: -1 });

@@ -1,4 +1,4 @@
-const carrinhoService = require("../Services/CarrinhoService");
+const carrinhoService = require("../services/carrinhoService");
 
 async function listar(req, res) {
     try {

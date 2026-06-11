@@ -1,4 +1,4 @@
-const notebookService = require("../Services/NotebookService");
+const notebookService = require("../services/NotebookService");
 
 async function listar(req, res) {
     try {

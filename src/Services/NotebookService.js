@@ -1,4 +1,4 @@
-const Notebook = require("../Models/Notebook");
+const Notebook = require("../models/notebook");
 
 async function listarNotebooks() {
     return await Notebook.find().populate("carrinho").sort({ criadoEm: -1 });
