@@ -164,6 +164,8 @@ async function loadData() {
   try {
     const data = await fetchNotebooks();
 
+    console.log(data);
+
     allNotebooks = Array.isArray(data)
       ? data
       : (data.notebooks || data.data || []);
@@ -171,18 +173,8 @@ async function loadData() {
     updateSummary(allNotebooks);
     renderCards();
 
-    lastUpdateText.textContent =
-      `Atualizado às ${new Date().toLocaleTimeString('pt-BR', {
-        hour: '2-digit',
-        minute: '2-digit'
-      })}`;
-
-    showState('cards');
   } catch (err) {
-    errorMessage.textContent =
-      `Erro ao conectar com a API (${API_BASE})`;
-
-    showState('error');
+    console.error(err);
   }
 }
 
@@ -234,9 +226,9 @@ function esc(str) {
     .replace(/>/g, '&gt;') : '';
 }
 
-/* =========================
+/*
    EVENTOS
-========================= */
+*/
 
 searchInput.addEventListener('input', (e) => {
   buscaAtual = e.target.value.trim();
@@ -269,3 +261,4 @@ document.addEventListener('keydown', (e) => {
 
 
 loadData();
+

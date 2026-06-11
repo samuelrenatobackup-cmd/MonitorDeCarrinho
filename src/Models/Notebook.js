@@ -2,11 +2,16 @@ const mongoose = require("mongoose");
 
 const NotebookSchema = new mongoose.Schema({
 
-    nome: String,
+    nome: {
+        type: String,
+        required: true
+    },
+
+    localizacao: String,
 
     patrimonio: String,
 
-    numeroSlot: Number,
+    numeroDisp: Number,
 
     processador: String,
 
@@ -15,6 +20,14 @@ const NotebookSchema = new mongoose.Schema({
     armazenamentoTotal: Number,
 
     sistema: String,
+
+    bateria: {
+        nivel: Number,
+        tecnologia: String,
+        saude: String,
+        status: String,
+        temperatura: Number
+    },
 
     carrinho: {
         type: mongoose.Schema.Types.ObjectId,
@@ -32,5 +45,6 @@ const NotebookSchema = new mongoose.Schema({
         default: Date.now
     }
 
-})
+});
+
 module.exports = mongoose.model("Notebook", NotebookSchema);

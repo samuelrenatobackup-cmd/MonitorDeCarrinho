@@ -1,19 +1,50 @@
 const mongoose = require("mongoose");
 
 const CelularSchema = new mongoose.Schema({
-    celular: {
+
+    nome: {
         type: String,
         required: true
     },
-    bateria: Object,
-    cpu: Object,
-    ram: Object,
-    armazenamento: Object,
-    sistema: Object,
-    data: {
+
+    localizacao: String,
+
+    patrimonio: String,
+
+    numeroDisp: Number,
+
+    processador: String,
+
+    ramTotal: Number,
+
+    armazenamentoTotal: Number,
+
+    sistema: String,
+
+    bateria: {
+        nivel: Number,
+        tecnologia: String,
+        saude: String,
+        status: String,
+        temperatura: Number
+    },
+
+    carrinho: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Carrinho"
+    },
+
+    status: {
+        type: String,
+        enum: ["guardado", "retirado", "offline"],
+        default: "offline"
+    },
+
+    criadoEm: {
         type: Date,
         default: Date.now
     }
+
 });
 
 module.exports = mongoose.model("Celular", CelularSchema);
