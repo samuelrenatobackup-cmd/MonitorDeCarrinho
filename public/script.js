@@ -186,9 +186,9 @@ async function loadData() {
   }
 }
 
-/* =========================
+/* 
    HELPERS
-========================= */
+*/
 
 // Define visual do status
 function statusConfig(status) {

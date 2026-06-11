@@ -5,7 +5,7 @@ const connectDB = require("./database/database");
 
 const notebookRoutes = require("./src/routes/notebookRoutes");
 const carrinhoRoutes = require("./src/routes/carrinhoRoutes");
-const dadosRoutes = require("./src/routes/dadosRoutes");
+const celularRoutes = require("./src/routes/celularRoutes");
 
 const app = express();
 
@@ -21,7 +21,7 @@ app.use("/Notebooks", notebookRoutes);
 app.use("/Carrinhos", carrinhoRoutes);
 
 // TESTE
-app.use("/api", dadosRoutes);
+app.use("/api", celularRoutes);
 
 // TESTE
 app.get("/", (req, res) => {
